@@ -8,9 +8,9 @@ Port 22
 #ListenAddress 0.0.0.0
 Protocol 2
 # HostKeys for protocol version 2
-HostKey /etc/ssh/ssh_host_rsa_key
-HostKey /etc/ssh/ssh_host_dsa_key
-HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /config/ssh_host_rsa_key
+HostKey /config/ssh_host_dsa_key
+HostKey /config/ssh_host_ecdsa_key
 #Privilege Separation is turned on for security
 UsePrivilegeSeparation yes
 
@@ -32,7 +32,7 @@ PubkeyAuthentication yes
 AuthorizedKeysFile /config/%u-authorized_keys
 
 # Workaround to set the REPREPRO_BASE_DIR environment variable automatically
-ForceCommand export REPREPRO_BASE_DIR=/data/debian; [ -n "$SSH_ORIGINAL_COMMAND" ] && eval "$SSH_ORIGINAL_COMMAND" || exec "$SHELL"
+ForceCommand export REPREPRO_BASE_DIR="@REPREPRO_BASE_DIR@"; [ -n "$SSH_ORIGINAL_COMMAND" ] && eval "$SSH_ORIGINAL_COMMAND" || exec "$SHELL"
 
 # Don't read the user's ~/.rhosts and ~/.shosts files
 IgnoreRhosts yes

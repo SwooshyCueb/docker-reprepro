@@ -27,7 +27,7 @@ volume that should contain 4 files:
 
   - `/config/apt-authorized_keys`: ssh authorized_keys file for the apt user
     which should be used when running `apt-get` commands.
-    Should be chown root:root and chmod 644.
+    Should be chown root:root and chmod 644. (no longer needed?)
   - `/config/reprepro-authorized_keys`: ssh authorized_keys file for the
     reprepro user which should be used to upload debian packages with the
     `dput` command.
@@ -43,12 +43,12 @@ You also need to provide a read-write `/data` volume, which will be used to
 write the debian packages reprepro database, and the `.gnupg/` directory for
 imported gpg keys.
 
-If the `debian/` directory doesn't already exist in the `/data/` volume,
+If the `ubuntu/` directory doesn't already exist in the `/data/` volume,
 docker-reprepro will setup a reprepro repository based on configuration
 available through environment variables (see `docker run` example below).
 
 If you want to further customize the reprepro configuration, feel free to
-provide your own debian reprepro setup in `/data/debian/`.
+provide your own ubuntu reprepro setup in `/data/ubuntu/`.
 
 Then, when starting your reprepro container, you will want to bind ports `22`
 from the reprepro container to a host external port, so that it is accessible
@@ -73,7 +73,8 @@ For example:
         -e RPP_INCOMINGS="in_wheezy;in_jessie" \
         -e RPP_ALLOW_in_wheezy="stable>wheezy-dev" \
         -e RPP_ALLOW_in_jessie="stable>jessie-dev" \
-        -p 22:22 \
+        -p 2680:80 \
+        -p 2622:22 \
         bbinet/reprepro
 
 Usage
